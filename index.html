@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fulfillment Metrics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="top-bar-title">
+            <h1>Fulfillment Metrics</h1>
+        </div>
+        <div class="top-bar-stats">
+            <span>Total Orders: <span class="value" id="total-orders">0</span></span>
+            <span>Filters: <span class="value" id="active-filters">All data</span></span>
+        </div>
+        <div class="upload-area">
+            <label class="upload-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                Upload CSV
+                <input type="file" id="file-input" accept=".csv" accept-charset="utf-8">
+            </label>
+            <span class="or-text">or drag & drop file here</span>
+        </div>
+    </header>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <div class="filter-group" id="filter-brand">
+            <span class="filter-label">Brand</span>
+            <div class="pill-group">
+                <button class="pill-btn active" data-brand="all">All</button>
+                <button class="pill-btn" data-brand="NB">NB</button>
+                <button class="pill-btn" data-brand="AX">AX</button>
+                <button class="pill-btn" data-brand="ZP">ZP</button>
+                <button class="pill-btn" data-brand="VS">VS</button>
+                <button class="pill-btn" data-brand="RK">RK</button>
+            </div>
+        </div>
+
+        <div class="filter-group" id="filter-location">
+            <span class="filter-label">Location</span>
+            <div class="pill-group">
+                <button class="pill-btn active" data-location="all">All</button>
+                <button class="pill-btn" data-location="WH">WH</button>
+                <button class="pill-btn" data-location="STORE">STORE</button>
+            </div>
+        </div>
+
+        <div class="filter-group" id="filter-marketplace">
+            <span class="filter-label">Source</span>
+            <div class="pill-group">
+                <button class="pill-btn active" data-marketplace="all">All</button>
+                <button class="pill-btn" data-marketplace="Marketplace">Marketplace</button>
+                <button class="pill-btn" data-marketplace="Web">Web</button>
+            </div>
+        </div>
+
+        <div class="filter-group" id="filter-fulfillment">
+            <span class="filter-label">Fulfillment</span>
+            <select id="fulfillment-select" class="filter-select">
+                <option value="all">All Locations</option>
+                <option value="NB Warehouse">NB Warehouse</option>
+                <option value="AX Fulfillment">AX Fulfillment</option>
+                <option value="ZP Center">ZP Center</option>
+                <option value="RK Hub">RK Hub</option>
+                <option value="LF Logistics">LF Logistics</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Date Range</span>
+            <div class="date-inputs">
+                <input type="date" id="date-from" class="date-input">
+                <span class="date-separator">to</span>
+                <input type="date" id="date-to" class="date-input">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="tile-grid" id="tile-grid">
+            <!-- Tiles will be rendered here by JavaScript -->
+            <div class="loading" style="grid-column: 1 / -1;">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Drill-down Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-panel">
+            <div class="modal-header">
+                <h2 id="modal-title">Metric Details</h2>
+                <button class="modal-close" id="modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data-loader.js"></script>
+    <script src="default-data.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        // Close modal button
+        document.getElementById('modal-close').addEventListener('click', () => {
+            document.getElementById('modal-overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    </script>
+</body>
+</html>
